@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody,
     CardTitle } from 'reactstrap';
-class DishdetailComponent extends Component {
-    constructor(props) {
-        super(props);
-  
-        this.state = {
-            
-        }
-    }
-    renderDish(dish) {
+
+    function RenderDish({dish}) {
+        console.log(dish)
         if (dish != null)
             return(
+                <div  className="col-12 col-md-5 m-1">
                 <Card>
                     <CardImg top src={dish.image} alt={dish.name} />
                     <CardBody>
@@ -19,13 +14,15 @@ class DishdetailComponent extends Component {
                       <CardText>{dish.description}</CardText>
                     </CardBody>
                 </Card>
+                </div>
             );
         else
             return(
                 <div></div>
             );
     }
-     renderComments(comments) {
+    function RenderComments({comments}) {
+        console.log(comments)
          if(comments!= null){
         var commentList = comments.map(comment => {
             return (
@@ -40,8 +37,8 @@ class DishdetailComponent extends Component {
             );
         });
         return(
-            <div  className="col-12 col-md-5 m-1">
-              
+            
+              <div>
             <h4>Comments</h4>
             <ul className="list-unstyled">
                 
@@ -57,30 +54,17 @@ class DishdetailComponent extends Component {
      );
      }
      
-    
-    render() {
-        const dish = this.props.selectedDish;
-        const comments = this.props.comments;
-        console.log(comments)
-        // const renderComments = this.props.selectedDish.comments.map((comments) =>{
-        //     return(
-        //     <div key={comments.id}>
-        //     <div>{comments.comment}</div>
-        //     <div>`-- {comments.author}, {comments.date}`</div>
-        //     </div>
-        //     );
-        // });
+     
+    const  DishdetailComponent = (props) => {
         return (
-            <div className= "row">
-              <div  className="col-12 col-md-5 m-1">
-              {this.renderDish(dish)}
-              </div>
-              
-              {this.renderComments(comments)}
-              
-              </div>
-        )
+         <div className= "container">
+          <div className="row">
+              <RenderDish dish={props.dish} />
+              <RenderComments comments={props.comments}/>
+            </div>  
+             </div> 
+          )
     }
-}
+     
 
 export default DishdetailComponent;
