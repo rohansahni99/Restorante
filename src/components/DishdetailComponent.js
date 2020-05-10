@@ -22,7 +22,7 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
                 <div></div>
             );
     }
-    function RenderComments({comments}) {
+    function RenderComments({comments, addComment, dishId}) {
         console.log(comments)
          if(comments!= null){
         var commentList = comments.map(comment => {
@@ -46,6 +46,7 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
                     {commentList}
              
             </ul>
+            <CommentForm dishId={dishId} addComment={addComment} />
               </div>
         );
     }
@@ -75,10 +76,14 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
                     <RenderDish dish={props.dish} />
                 </div>
                 <div className="col-12 col-md-5 m-1">
-                    <RenderComments comments={props.comments} />
+                <RenderComments comments={props.comments}
+                    addComment={props.addComment}
+                    dishId={props.dish.id}
+                />
                 </div>
             </div>
-            <CommentForm dishId={props.dish.dishId} />
+            
+
             </div>
         );
     }
@@ -108,9 +113,7 @@ export class CommentForm extends Component {
 
     handleSubmit(values) {
         this.toggleModal();
-        console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
-        //this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
     }
 
     render() {
